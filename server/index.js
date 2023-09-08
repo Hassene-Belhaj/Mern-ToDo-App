@@ -8,6 +8,7 @@ require("dotenv").config()
 
 const app = express()
 app.use(express.json())
+app.use(express.urlencoded({extended :true}))
 app.use(cors())
 
 PORT = process.env._PORT
@@ -19,5 +20,7 @@ app.listen(PORT , () => {
 app.get('/' , (req,res) => {
     res.send("server is runnig !!!")
 })
+
+
 
 app.use('/api/todolist' ,  todoRoute)

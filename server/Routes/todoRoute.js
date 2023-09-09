@@ -14,8 +14,9 @@ router.route('/').get(getAllTodo).post(createTodo)
 
 router.route('/update/:id')
 .get(getSingleTodo)
-.put(updateTodo)
+.patch(updateTodo)
 .post(createTodo)
+.delete(deleteTodo)
 
 
 

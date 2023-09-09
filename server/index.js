@@ -1,7 +1,8 @@
 const express = require("express")
 require("./config/Database")
 const todoRoute = require("./Routes/todoRoute")
-
+const NotFound = require("./middleWare/NotFound")
+const ErrorHandlerMiddle = require('./middleWare/ErrorHandlerMiddleware')
 const cors = require("cors")
 
 require("dotenv").config()
@@ -11,10 +12,10 @@ app.use(express.json())
 app.use(express.urlencoded({extended :true}))
 app.use(cors())
 
-PORT = process.env._PORT
+const port = process.env.PORT
 
-app.listen(PORT , () => {
-    console.log(`start working ${PORT}`);
+app.listen(port , () => {
+    console.log(`start working ${port}`);
 })
 
 app.get('/' , (req,res) => {
@@ -24,3 +25,5 @@ app.get('/' , (req,res) => {
 
 
 app.use('/api/todolist' ,  todoRoute)
+app.use(NotFound)
+app.use(ErrorHandlerMiddle)

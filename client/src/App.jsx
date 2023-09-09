@@ -1,8 +1,13 @@
 import React from 'react'
+import { Global } from './GlobalStyle'
+import Todo from './Components/Todo'
 
 const App = () => {
   return (
-    <div>App</div>
+    <>
+    <Global />  
+    <Todo /> 
+    </>
   )
 }
 

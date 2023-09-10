@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { AiOutlineEdit } from 'react-icons/ai'
 import { BsTrash } from 'react-icons/bs'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 
 const Title = styled.h2`
@@ -43,7 +44,8 @@ const Input = styled.input`
 width: 80%;
 padding: .5rem;
 background-color: #f3f5f9;
-border: 1px solid rgba(0,0,0,0.2);
+font-size: 1.2rem;
+border: 2px solid rgba(0,0,0,0.2);
 border-top-left-radius: 5px;
 border-bottom-left-radius: 5px;
 outline: none;
@@ -148,7 +150,7 @@ FetchData()
       <TodoContainer>
         <Title>Task Manager</Title>
         <Form onSubmit={e=>e.preventDefault()}>
-           <Input value={input} onChange={e=>setInput(e.target.value)}   placeholder='add Task' />
+           <Input value={input} onChange={e=>setInput(e.target.value)}   placeholder='What do you want to add ?' />
            <Button onClick={addTodo}>Submit</Button>
         </Form>
       </TodoContainer>
@@ -158,7 +160,9 @@ FetchData()
                     <TodoDivFlex>
                     <TodoText $completed={completed}>{name}</TodoText>
                         <IconsFlex>
+                            <Link to={`/edittodo/${_id}`}>
                             <EditIcon size={20} color='green'/>
+                            </Link>
                             <DeleteIcon onClick={()=>DeleteTodo(_id)} size={20} color='indigo' />
                         </IconsFlex>    
                     </TodoDivFlex>

@@ -4,11 +4,12 @@ export const Global = createGlobalStyle`
 *{
     padding: 0;
     margin: 0;
-    box-sizing: border-box;
+    box-sizing: border-box; 
 }
 body{
     scroll-behavior: smooth;
     font-family: 'Inconsolata', monospace;
+    background-color: #f3f5f9;
 }
 
 `

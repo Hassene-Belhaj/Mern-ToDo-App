@@ -16,9 +16,8 @@ text-align: center;
 
 const Container = styled.div`
 width: 100%;
-height: 100vh;
-padding-top: 10rem;
-background-color: #f3f5f9;
+height: 100%;
+padding: 5rem 0;
 display: flex;
 flex-direction: column;
 align-items: center;

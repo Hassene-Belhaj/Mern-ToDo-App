@@ -1,4 +1,5 @@
 import React from 'react'
+import { useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -74,6 +75,8 @@ margin: auto;
 
 const CheckBox = styled.input`
 margin-left: 2rem;
+accent-color: indigo;
+cursor: pointer;
 `
 
 const Button = styled.button`
@@ -94,9 +97,16 @@ transition: all 0.2s ease-in-out;
 `
 
 
-const EditTodo = () => {
+const EditTodo = ({data , setData , input , setInput , updateTodo , completed , setCompleted}) => {
 
-    const {id}= useParams()
+const {id}= useParams()
+const FindTodo = data.find((item)=>item._id === id)
+
+useEffect(()=>{
+setInput(FindTodo?.name)
+},[])    
+
+
 
     const navigate = useNavigate()
   return (
@@ -107,20 +117,20 @@ const EditTodo = () => {
                <Label>Task ID</Label>
                <TaskID>{id}</TaskID>
             </ID>
-            <Form>
+            <Form onSubmit={e=>e.preventDefault()}>
                 <Label>Name </Label>
-                    <Input></Input>
+                    <Input type='text' value={input} onChange={e=>setInput(e.target.value)} autoCorrect='off' autoComplete='off'/>
             </Form>
             <Completed>
                 <Label>Completed </Label>
-                 <CheckBox type='checkbox'></CheckBox>
+                 <CheckBox type='checkbox' value={completed} onChange={e=>setCompleted(!FindTodo?.completed)}></CheckBox>
             </Completed>
          
-             <Button width={'60%'} color='indigo'>Edit</Button> 
+             <Button onClick={()=>updateTodo(id)} width={'60%'} color='indigo'>Edit</Button> 
         </TodoContainer>
 
             
-             <Button onClick={()=>navigate('/')} width={'15%'} color='#000'>Back To Tasks</Button> 
+             <Button onClick={()=>navigate('/')}  width={'15%'} color='#000'>Back To Tasks</Button> 
             
     </Container>
   )

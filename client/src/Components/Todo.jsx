@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { AiOutlineEdit } from 'react-icons/ai'
+import { AiOutlineEdit ,AiOutlineCheckCircle } from 'react-icons/ai'
 import { BsTrash } from 'react-icons/bs'
-import axios from 'axios'
 import { Link } from 'react-router-dom'
 
 
@@ -100,49 +99,16 @@ text-transform: capitalize;
 `
 const IconsFlex = styled.div``
 
+const CompletedIcon = styled(AiOutlineCheckCircle)`
+margin-right: 1rem;
+color: ${({$bgc})=>$bgc ? 'green' : 'red'};
+`
+const TodoLeft = styled.div`
+display: flex;
+justify-content: center;
+`
 
-const Todo = () => {
-   const [data , setData] = useState([])
-   const [input , setInput] = useState('')
-   const [completed , setCompleted] = useState(false)
-
-const BASE_URL = "http://127.0.0.1:5174/api/todolist"   
-
-
-
-const FetchData = async () => {
-try {
-const res = await axios.get(BASE_URL + '/all' , {
-    method : "GET" 
-})    
-setData(res.data.data.todos)
-} catch (error) {
- console.log(error);    
-}
-}
-
-const addTodo = async () => {
-  const res  =  await axios.post(BASE_URL + '/post' , {
-    method : "POST" , 
-    name : input,
-    completed : completed
-})
-console.log(res); 
-}
-
-
-const DeleteTodo = async (id) => {
-   const res = await axios.delete(BASE_URL + '/delete/' + id , {
-    method : "DELETE",
-   }) 
-   console.log(res);
-}
-
-
-useEffect(()=>{
-FetchData()
-},[data])
-
+const Todo = ({data,input,setInput,addTodo,DeleteTodo}) => {
   return (
     <>
     <Container>
@@ -156,8 +122,14 @@ FetchData()
            {data.map(({_id,name,completed})=>{
                return (
                 <TodoDiv key={_id}>
+                    
                     <TodoDivFlex>
-                    <TodoText $completed={completed}>{name}</TodoText>
+
+                        <TodoLeft>
+                            <CompletedIcon $bgc={completed} size={20}/> 
+                            <TodoText $completed={completed} autoCorrect='off' autoCapitalize='off'> {name}</TodoText>
+                        </TodoLeft>
+
                         <IconsFlex>
                             <Link to={`/edittodo/${_id}`}>
                             <EditIcon size={20} color='green'/>

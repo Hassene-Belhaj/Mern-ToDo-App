@@ -6,9 +6,9 @@ require("dotenv").config()
 const cors = require("cors")
 const {NotFound , ErrorHandler} = require("./middleWare/ErrorHandler")
 
-
-
 const app = express()
+
+
 app.use(express.json())
 app.use(express.urlencoded({extended :true}))
 app.use(cors())
@@ -22,6 +22,6 @@ app.listen(port , () => {
 })
 
 
-app.use('/api/todolist' ,  todoRoute)
+app.use('/api/todolist' , todoRoute)
 app.use(NotFound)
 app.use(ErrorHandler)

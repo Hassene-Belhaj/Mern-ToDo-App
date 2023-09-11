@@ -97,7 +97,7 @@ transition: all 0.2s ease-in-out;
 `
 
 
-const EditTodo = ({data , setData , input , setInput , updateTodo , completed , setCompleted}) => {
+const EditTodo = ({data , input , setInput , updateTodo , completed , setCompleted}) => {
 
 const {id}= useParams()
 const FindTodo = data.find((item)=>item._id === id)
@@ -106,6 +106,10 @@ useEffect(()=>{
 setInput(FindTodo?.name)
 },[])    
 
+const handleClick = () => {
+    setInput('')
+    navigate('/')
+}
 
 
     const navigate = useNavigate()
@@ -130,7 +134,7 @@ setInput(FindTodo?.name)
         </TodoContainer>
 
             
-             <Button onClick={()=>navigate('/')}  width={'15%'} color='#000'>Back To Tasks</Button> 
+             <Button onClick={handleClick}  width={'15%'} color='#000'>Back To Tasks</Button> 
             
     </Container>
   )

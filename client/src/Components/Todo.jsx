@@ -109,6 +109,7 @@ justify-content: center;
 `
 
 const Todo = ({data,input,setInput,addTodo,DeleteTodo}) => {
+  const condition = input.length
   return (
     <>
     <Container>

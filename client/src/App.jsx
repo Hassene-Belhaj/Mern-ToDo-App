@@ -27,7 +27,8 @@ const BASE_URL = "http://127.0.0.1:5174/api/todolist"
     }
     
     const addTodo = async () => {
-    try {
+      if(input.length > 1 ) {
+        try {
       const res  =  await axios.post(BASE_URL + '/post' , {
       method : "POST" , 
       name : input,
@@ -35,9 +36,12 @@ const BASE_URL = "http://127.0.0.1:5174/api/todolist"
       
     }
     ) 
+    setInput('')
     } catch (error) {
       console.log(error);
     }
+      }
+    
     }
     
     
@@ -71,7 +75,7 @@ const BASE_URL = "http://127.0.0.1:5174/api/todolist"
     
     useEffect(()=>{
     FetchData()
-    },[data])
+    },[data,completed])
 
 
 

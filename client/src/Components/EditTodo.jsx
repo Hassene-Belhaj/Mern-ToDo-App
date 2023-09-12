@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState } from 'react'
 import { useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components'
@@ -95,24 +96,52 @@ transition: all 0.2s ease-in-out;
     opacity : 0.9 ;
 }
 `
-
+const Message = styled.h4`
+margin: 2rem auto;
+text-align: center;
+color: green;
+transition: all 0.2s ease-in-out;
+`
 
 const EditTodo = ({data , input , setInput , updateTodo , completed , setCompleted}) => {
 
-const {id}= useParams()
-const FindTodo = data.find((item)=>item._id === id)
-
+     const [toggle , setToggle] = useState(false)
+     const [checkBox , setCheckBox] = useState(false)
+     const [msg , setMsg] = useState(false)
+    
+    const navigate = useNavigate()
+    const {id}= useParams()
+    const FindTodo = data.find((item)=>item._id === id)
+    
 useEffect(()=>{
 setInput(FindTodo?.name)
+setCheckBox(false)
 },[])    
 
 const handleClick = () => {
-    setInput('')
-    navigate('/')
+setInput('')
+navigate('/')
 }
 
+const handleSubmit = (id) => {
+ if(input !== FindTodo?.name || checkBox === true)  {
+   setTimeout(() =>{setToggle(false) }, 3000)
+   setToggle(true)
+   updateTodo(id)
+} else {
+    setTimeout(() => {setMsg(false) }, 3000)
+    setMsg(true)
+}
+}
 
-    const navigate = useNavigate()
+const handleChange = () => {
+setCheckBox(true)
+if(FindTodo.completed === false) {
+    setCompleted(true)
+}
+}
+// console.log(FindTodo?.completed);
+
   return (
     <Container>
         <TodoContainer>
@@ -123,14 +152,15 @@ const handleClick = () => {
             </ID>
             <Form onSubmit={e=>e.preventDefault()}>
                 <Label>Name </Label>
-                    <Input type='text' value={input} onChange={e=>setInput(e.target.value)} autoCorrect='off' autoComplete='off'/>
+                    <Input type='text' value={input} onChange={e=>setInput(e.target.value)} autoCorrect='off' autoComplete='off' onFocus={()=>setToggle(false)}/>
             </Form>
             <Completed>
                 <Label>Completed </Label>
-                 <CheckBox type='checkbox' value={completed} onChange={e=>setCompleted(!FindTodo?.completed)}></CheckBox>
+                 <CheckBox type='checkbox' value={completed} onChange={e=>handleChange()}></CheckBox>
             </Completed>
          
-             <Button onClick={()=>updateTodo(id)} width={'60%'} color='indigo'>Edit</Button> 
+             <Button onClick={()=>handleSubmit(id)} width={'60%'} color='indigo'>Edit</Button> 
+             <Message style={{display : toggle || msg ? 'block' : 'none'}}>{toggle ? 'Edit successfull' : 'Please Edit Task Before Submit !' }</Message>
         </TodoContainer>
 
             

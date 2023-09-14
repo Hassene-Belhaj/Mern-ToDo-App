@@ -138,6 +138,8 @@ const handleChange = () => {
 setCheckBox(true)
 if(FindTodo.completed === false) {
     setCompleted(true)
+} else {
+    setCompleted(false)
 }
 }
 // console.log(FindTodo?.completed);
